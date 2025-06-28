@@ -1,0 +1,21 @@
+{% extends 'AppCoder/padre.html' %}
+{% load static %}
+
+{% block title %}Categorías{% endblock %}
+
+{% block contenido %}
+    <h1>Categorías</h1>
+    <p>Aquí podrás ver las categorías existentes.</p>
+    
+        {% if categorias %}
+        <ul class="list-group mt-3">
+            {% for categoria in categorias %}
+                <li class="list-group-item">
+                    {{ categoria.nombre }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">No hay categorías registradas aún.</p>
+    {% endif %}
+{% endblock %}

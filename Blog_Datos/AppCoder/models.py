@@ -1,21 +1,33 @@
 from django.db import models
 
-class Curso(models.Model):
-    nombre = models.CharField(max_length=100)  # Campo string de 100 caracteres
-    camada = models.IntegerField()  # Campo entero
+class Autor(models.Model):
+    nombre = models.CharField(max_length=50)
+    apellido = models.CharField(max_length=50)
+    pais = models.CharField(max_length=50)
+    profesion = models.CharField(max_length=100, blank=True, null=True) #opcional
 
-class Estudiante(models.Model):
-    nombre = models.CharField(max_length=30)  # Campo string de 100 caracteres
-    apellido = models.CharField(max_length=30)  # Campo string de 100 caracteres
-    email = models.EmailField()  # Campo de email
+    def __str__(self):
+        return f"{self.nombre} {self.apellido}"
+#----------------------------------------------     
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=100)
 
-class Profesor(models.Model):
-    nombre = models.CharField(max_length=30)  # Campo string de 30 caracteres
-    apellido = models.CharField(max_length=30)  # Campo string de 30 caracteres
-    email = models.EmailField()  # Campo de email
-    profesion = models.CharField(max_length=50)  # Campo string de 50 caracteres
+    def __str__(self):
+        return self.nombre
+#----------------------------------------------    
+class DatoCurioso(models.Model):
+    titulo = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
 
-class Entregable(models.Model):
-    nombre = models.CharField(max_length=100)  # Campo string de 100 caracteres
-    fechaDeEntrega = models.DateField()  # Campo de fecha
-    entregado = models.BooleanField()  # Campo booleano
+    def __str__(self):
+        return self.titulo
+#----------------------------------------------
+class Comentario(models.Model):
+    nombre =models.CharField(max_length=100)
+    comentario = models.TextField()
+    dato = models.ForeignKey(DatoCurioso, on_delete=models.CASCADE, related_name="comentarios")
+
+    def __str__(self):
+        return f"Comentario de {self.nombre} sobre {self.dato}"

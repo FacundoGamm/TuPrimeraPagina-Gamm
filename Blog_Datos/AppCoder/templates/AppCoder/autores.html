@@ -1,0 +1,24 @@
+{% extends 'AppCoder/padre.html' %}
+{% load static %}
+
+{% block title %}Autores{% endblock %}
+
+{% block contenido %}
+    <h1>Autores</h1>
+    <p>Aquí se podrán ver los autores registrados.</p>
+    
+     {% if autores %}
+        <ul class="list-group mt-3">
+            {% for autor in autores %}
+                <li class="list-group-item">
+                    <strong>{{ autor.nombre }} {{ autor.apellido }}</strong> - {{ autor.pais }}
+                    {% if autor.profesion %}
+                        ({{ autor.profesion }})
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">No hay autores registrados aún.</p>
+    {% endif %}
+{% endblock %}

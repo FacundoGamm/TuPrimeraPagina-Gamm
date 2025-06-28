@@ -1,0 +1,31 @@
+{% extends 'AppCoder/padre.html' %}
+{% load static %}
+
+{% block title %}Datos Curiosos{% endblock %}
+
+{% block contenido %}
+    <h1>Datos Curiosos</h1>
+    <p>Aquí se mostrarán los datos curiosos que tenemos.</p>
+    {% if datos %}
+        <div class="row mt-4">
+            {% for dato in datos %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ dato.titulo }}</h5>
+                            <p class="card-text">{{ dato.descripcion|truncatewords:25 }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Categoría: {{ dato.categoria }} | Autor: {{ dato.autor }}
+                                </small>
+                            </p>
+                            <a href="{% url 'detalle_dato' dato.id %}" class="btn btn-outline-primary btn-sm">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Todavía no hay datos curiosos publicados.</p>
+    {% endif %}
+{% endblock %}

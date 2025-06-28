@@ -1,54 +1,85 @@
-from django.shortcuts import render
-from .models import Curso
-from .forms import CursoFormulario
-from django.http import HttpResponse
-
+from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import redirect
+from .models import DatoCurioso, Comentario, Categoria, Autor
+from .forms import DatoCuriosoForm, ComentarioForm, BusquedaForm
+#--------------------------------------------------------------------------
 
 def inicio(request):
-    return render(request, "AppCoder/index.html")
+    return render(request, "AppCoder/inicio.html")
+#--------------------------------------------------------------------------
 
-def cursos(request):
-    return render(request, "AppCoder/cursos.html")
+def lista_datos(request):
+    datos = DatoCurioso.objects.all()
+    return render(request, "AppCoder/datosCuriosos.html", {"datos": datos})
+#--------------------------------------------------------------------------
 
-def profesores(request):
-    return render(request, "AppCoder/profesores.html")
+def detalle_dato(request, dato_id):
+    dato = get_object_or_404(DatoCurioso, id=dato_id)
+    comentarios = dato.comentarios.all()
 
-def estudiantes(request):
-    return render(request, "AppCoder/estudiantes.html")
-
-def entregables(request):
-    return render(request, "AppCoder/entregables.html")
-
-def cursoFormulario2(request):
-      if request.method == "POST":
-            miFormulario = CursoFormulario(request.POST) # Aqui me llega la informacion del html
-            if miFormulario.is_valid():
-                  informacion = miFormulario.cleaned_data
-                  curso = Curso(nombre=informacion["curso"], camada=informacion["camada"])
-                  curso.save()
-                  return render(request, "AppCoder/cursos.html")
-      else:
-            miFormulario = CursoFormulario() # Formulario vacio para construir el html
- 
-      return render(request, "AppCoder/formulario/cursoFormulario2.html", {"miFormulario": miFormulario})
-
-
-def busquedaCamada(request):
-    return render(request, "AppCoder/formulario/busquedaCamada.html")
-
-
-def buscar(request):
-    if request.GET["camada"]:
-        #respuesta = f"Estoy buscando la camada nro: {request.GET['camada'] }"
-        camada = request.GET['camada']
-        # icontains es un filtro que se usa para buscar coincidencias en los campos de texto de la base de datos, 
-        # sin importar si las letras están en mayúsculas o minúsculas
-        cursos = Curso.objects.filter(camada__icontains=camada)
-
-        return render(request, "AppCoder/formulario/resultadosBusqueda.html", {"cursos": cursos, "camada": camada})
-
+    if request.method == "POST":
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.dato = dato
+            comentario.save()
+            return redirect("detalle_dato", dato_id=dato.id)
     else:
-        respuesta = "No enviaste datos"
+        form = ComentarioForm()
 
-        # No olvidar from django.http import HttpResponse
-        return HttpResponse(respuesta)
+    return render(request, "AppCoder/detalle_dato.html", {
+        "dato": dato,
+        "comentarios": comentarios,
+        "form": form
+    })
+#-------------------------------------------------------------------------
+def agregar_dato(request):
+    if request.method == "POST":
+        form = DatoCuriosoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("lista_datos")
+    else:
+        form = DatoCuriosoForm()
+
+    return render(request, "AppCoder/agregar_dato.html", {"form": form})
+#--------------------------------------------------------------------------
+
+def nuevo_comentario(request, dato_id):
+    dato = get_object_or_404(DatoCurioso, id=dato_id)
+    
+    if request.method == "POST":
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.dato = dato
+            comentario.save()
+            return redirect("detalle_dato", dato_id=dato.id)
+    else:
+        form = ComentarioForm()
+
+    return render(request, "AppCoder/nuevo_comentario.html", {"form": form, "dato": dato})
+#-------------------------------------------------------
+
+def buscar_datos(request):
+    form = BusquedaForm(request.GET or None)
+    resultados = []
+
+    if form.is_valid():
+        termino = form.cleaned_data["termino"]
+        resultados = DatoCurioso.objects.filter(titulo__icontains=termino)
+
+    return render(request, "AppCoder/buscar_datos.html", {
+        "form": form,
+        "resultados": resultados
+    })
+
+#-------------------------------------------------------
+def ver_autores(request):
+    autores = Autor.objects.all()
+    return render(request, "AppCoder/autores.html", {"autores": autores})
+#-------------------------------------------------------
+def ver_categorias(request):
+    categorias = Categoria.objects.all()
+    return render(request, "AppCoder/categorias.html", {"categorias": categorias})
+
