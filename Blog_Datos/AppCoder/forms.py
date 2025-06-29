@@ -1,5 +1,5 @@
 from django import forms
-from .models import DatoCurioso, Comentario
+from .models import DatoCurioso, Comentario, Autor, Categoria
 
 # Formulario para agregar un Dato Curioso
 class DatoCuriosoForm(forms.ModelForm):
@@ -22,3 +22,13 @@ class ComentarioForm(forms.ModelForm):
 # Formulario de búsqueda
 class BusquedaForm(forms.Form):
     termino = forms.CharField(label="Buscar", max_length=100)
+#formulario autor
+class AutorForm(forms.ModelForm):
+    class Meta:
+        model = Autor
+        fields = ['nombre']
+#formulario categoría
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ['nombre']

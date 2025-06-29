@@ -1,7 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import DatoCurioso, Comentario, Categoria, Autor
-from .forms import DatoCuriosoForm, ComentarioForm, BusquedaForm
+from .forms import DatoCuriosoForm, ComentarioForm, BusquedaForm, AutorForm, CategoriaForm
 #--------------------------------------------------------------------------
 
 def inicio(request):
@@ -83,3 +82,24 @@ def ver_categorias(request):
     categorias = Categoria.objects.all()
     return render(request, "AppCoder/categorias.html", {"categorias": categorias})
 
+# ---------------------------------------------------
+def agregar_autor(request):
+    if request.method == "POST":
+        form = AutorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("ver_autores")
+    else:
+        form = AutorForm()
+    return render(request, "AppCoder/formulario/autor_form.html", {"form": form})
+
+# ---------------------------------------------------
+def agregar_categoria(request):
+    if request.method == "POST":
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("ver_categorias")
+    else:
+        form = CategoriaForm()
+    return render(request, "AppCoder/formulario/categoria_form.html", {"form": form})

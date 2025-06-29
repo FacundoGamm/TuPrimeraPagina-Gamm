@@ -6,6 +6,7 @@
 {% block contenido %}
     <h1>Autores</h1>
     <p>Aquí se podrán ver los autores registrados.</p>
+    <a href="{% url 'agregar_autor' %}" class="btn btn-primary mb-3">Agregar Autor</a>
     
      {% if autores %}
         <ul class="list-group mt-3">

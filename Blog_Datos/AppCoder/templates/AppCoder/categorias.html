@@ -6,7 +6,7 @@
 {% block contenido %}
     <h1>Categorías</h1>
     <p>Aquí podrás ver las categorías existentes.</p>
-    
+    <a href="{% url 'agregar_categoria' %}" class="btn btn-primary mb-3">Agregar Categoría</a>
         {% if categorias %}
         <ul class="list-group mt-3">
             {% for categoria in categorias %}

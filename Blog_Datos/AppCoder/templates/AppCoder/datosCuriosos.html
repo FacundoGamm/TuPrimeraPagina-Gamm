@@ -6,6 +6,8 @@
 {% block contenido %}
     <h1>Datos Curiosos</h1>
     <p>Aquí se mostrarán los datos curiosos que tenemos.</p>
+    <a href="{% url 'agregar_dato' %}" class="btn btn-primary mb-3">Agrega un dato curioso</a>
+
     {% if datos %}
         <div class="row mt-4">
             {% for dato in datos %}
