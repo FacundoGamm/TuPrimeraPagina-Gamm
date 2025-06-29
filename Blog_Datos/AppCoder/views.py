@@ -41,7 +41,7 @@ def agregar_dato(request):
     else:
         form = DatoCuriosoForm()
 
-    return render(request, "AppCoder/agregar_dato.html", {"form": form})
+    return render(request, "AppCoder/templates/formulario/agregar_dato.html", {"form": form})
 #--------------------------------------------------------------------------
 
 def nuevo_comentario(request, dato_id):

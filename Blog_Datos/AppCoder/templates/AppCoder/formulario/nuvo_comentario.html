@@ -1,0 +1,15 @@
+{% extends 'AppCoder/padre.html' %}
+{% load static %}
+
+{% block title %}Nuevo Comentario{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h2>Agregar Comentario</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+    </form>
+</div>
+{% endblock %}
