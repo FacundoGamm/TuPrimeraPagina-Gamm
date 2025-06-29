@@ -26,7 +26,10 @@ class BusquedaForm(forms.Form):
 class AutorForm(forms.ModelForm):
     class Meta:
         model = Autor
-        fields = ['nombre']
+        fields = ['nombre', 'profesion']
+        widgets = {
+            'profesion': forms.TextInput(attrs={'placeholder': 'Ej. Biólogo, Historiador... (opcional)'}),
+        }
 #formulario categoría
 class CategoriaForm(forms.ModelForm):
     class Meta:
