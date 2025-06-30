@@ -4,18 +4,11 @@
 {% block title %}Inicio{% endblock %}
 
 {% block contenido %}
-<header class="masthead">
-    <div class="container position-relative">
-        <div class="row justify-content-center">
-            <div class="col-xl-6">
-                <div class="text-center text-white">
-                    <h1 class="mb-5">Hola Mundo!</h1>
-                    <p class="mb-5">
-                        Bienvenido a la plataforma de datos curiosos. Explora autores, categorías y descubre hechos fascinantes para compartir y aprender.
-                    </p>
-                </div>
-            </div>
-        </div>
+<header class="masthead text-center text-white bg-primary py-5">
+    <div class="container">
+        <h1 class="mb-4">Bienvenido a Datos Curiosos</h1>
+        <p class="lead">Explorá hechos fascinantes, compartí curiosidades y descubrí más sobre el mundo.</p>
+        <a href="{% url 'lista_datos' %}" class="btn btn-light btn-lg mt-3">Ver Datos Curiosos</a>
     </div>
 </header>
 {% endblock %}

@@ -4,22 +4,29 @@
 {% block title %}Autores{% endblock %}
 
 {% block contenido %}
-    <h1>Autores</h1>
-    <p>Aquí se podrán ver los autores registrados.</p>
-    <a href="{% url 'agregar_autor' %}" class="btn btn-primary mb-3">Agregar Autor</a>
-    
-     {% if autores %}
-        <ul class="list-group mt-3">
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Autores</h2>
+        <a href="{% url 'agregar_autor' %}" class="btn btn-primary">Agregar autor</a>
+    </div>
+
+    {% if autores %}
+        <div class="row">
             {% for autor in autores %}
-                <li class="list-group-item">
-                    <strong>{{ autor.nombre }} {{ autor.apellido }}</strong> - {{ autor.pais }}
-                    {% if autor.profesion %}
-                        ({{ autor.profesion }})
-                    {% endif %}
-                </li>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ autor.nombre }}</h5>
+                            {% if autor.profesion %}
+                                <p class="card-text"><strong>Profesión:</strong> {{ autor.profesion }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
-        <p class="text-muted">No hay autores registrados aún.</p>
+        <p class="text-muted">Aún no hay autores registrados.</p>
     {% endif %}
+</div>
 {% endblock %}

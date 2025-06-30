@@ -4,18 +4,21 @@
 {% block title %}Categorías{% endblock %}
 
 {% block contenido %}
-    <h1>Categorías</h1>
-    <p>Aquí podrás ver las categorías existentes.</p>
-    <a href="{% url 'agregar_categoria' %}" class="btn btn-primary mb-3">Agregar Categoría</a>
-        {% if categorias %}
-        <ul class="list-group mt-3">
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Categorías</h2>
+        <a href="{% url 'agregar_categoria' %}" class="btn btn-success">Agregar categoría</a>
+    </div>
+
+    {% if categorias %}
+        <ul class="list-group">
             {% for categoria in categorias %}
-                <li class="list-group-item">
-                    {{ categoria.nombre }}
-                </li>
+                <li class="list-group-item">{{ categoria.nombre }}</li>
             {% endfor %}
         </ul>
     {% else %}
-        <p class="text-muted">No hay categorías registradas aún.</p>
+        <p class="text-muted">No hay categorías registradas.</p>
     {% endif %}
+</div>
 {% endblock %}
+

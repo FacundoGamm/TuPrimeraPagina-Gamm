@@ -1,15 +1,22 @@
 {% extends 'AppCoder/padre.html' %}
-{% load static %}
 
 {% block title %}Agregar Autor{% endblock %}
 
 {% block contenido %}
-<h1>Agregar autor<h1>
-
-<form method="post" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Guardar</button>
-    <a href="{% url 'ver_autores' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+<div class="container mt-5">
+    <h2>Agregar un nuevo autor</h2>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_nombre" class="form-label">Nombre</label>
+            {{ form.nombre }}
+        </div>
+        <div class="mb-3">
+            <label for="id_profesion" class="form-label">Profesión (opcional)</label>
+            {{ form.profesion }}
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'ver_autores' %}" class="btn btn-secondary">Volver</a>
+    </form>
+</div>
 {% endblock %}

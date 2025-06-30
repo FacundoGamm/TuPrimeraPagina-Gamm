@@ -2,13 +2,20 @@ from django import forms
 from .models import DatoCurioso, Comentario, Autor, Categoria
 
 # Formulario para agregar un Dato Curioso
+from django import forms
+from .models import DatoCurioso
+
 class DatoCuriosoForm(forms.ModelForm):
     class Meta:
         model = DatoCurioso
         fields = ['titulo', 'descripcion', 'categoria', 'autor']
         widgets = {
-            'descripcion': forms.Textarea(attrs={'rows': 4}),
+            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'autor': forms.Select(attrs={'class': 'form-control'}),
         }
+
 
 # Formulario para agregar un Comentario
 class ComentarioForm(forms.ModelForm):
@@ -35,3 +42,12 @@ class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
         fields = ['nombre']
+
+class AutorForm(forms.ModelForm):
+    class Meta:
+        model = Autor
+        fields = ['nombre', 'profesion']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'profesion': forms.TextInput(attrs={'class': 'form-control'}),
+        }

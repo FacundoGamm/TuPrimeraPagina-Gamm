@@ -4,24 +4,25 @@
 {% block title %}Datos Curiosos{% endblock %}
 
 {% block contenido %}
-    <h1>Datos Curiosos</h1>
-    <p>Aquí se mostrarán los datos curiosos que tenemos.</p>
-    <a href="{% url 'agregar_dato' %}" class="btn btn-primary mb-3">Agrega un dato curioso</a>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Datos Curiosos</h2>
+        <a href="{% url 'agregar_dato' %}" class="btn btn-info">Agregar dato curioso</a>
+    </div>
 
     {% if datos %}
-        <div class="row mt-4">
+        <div class="row">
             {% for dato in datos %}
-                <div class="col-md-6 mb-4">
-                    <div class="card shadow-sm">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
                         <div class="card-body">
                             <h5 class="card-title">{{ dato.titulo }}</h5>
                             <p class="card-text">{{ dato.descripcion|truncatewords:25 }}</p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Categoría: {{ dato.categoria }} | Autor: {{ dato.autor }}
-                                </small>
-                            </p>
-                            <a href="{% url 'detalle_dato' dato.id %}" class="btn btn-outline-primary btn-sm">Ver más</a>
+                        </div>
+                        <div class="card-footer bg-light text-muted small">
+                            <p class="mb-1">Categoría: {{ dato.categoria }}</p>
+                            <p class="mb-1">Autor: {{ dato.autor }}</p>
+                            <a href="{% url 'detalle_dato' dato.id %}" class="btn btn-outline-primary btn-sm mt-2">Ver más</a>
                         </div>
                     </div>
                 </div>
@@ -30,4 +31,5 @@
     {% else %}
         <p class="text-muted">Todavía no hay datos curiosos publicados.</p>
     {% endif %}
+</div>
 {% endblock %}
