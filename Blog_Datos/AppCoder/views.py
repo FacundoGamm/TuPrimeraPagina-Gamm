@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import DatoCurioso, Comentario, Categoria, Autor
 from .forms import DatoCuriosoForm, ComentarioForm, BusquedaForm, AutorForm, CategoriaForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 #--------------------------------------------------------------------------
 
 def inicio(request):
@@ -32,6 +37,7 @@ def detalle_dato(request, dato_id):
         "form": form
     })
 #-------------------------------------------------------------------------
+@login_required
 def agregar_dato(request):
     if request.method == "POST":
         form = DatoCuriosoForm(request.POST)
@@ -83,6 +89,7 @@ def ver_categorias(request):
     return render(request, "AppCoder/categorias.html", {"categorias": categorias})
 
 # ---------------------------------------------------
+@login_required
 def agregar_autor(request):
     if request.method == "POST":
         form = AutorForm(request.POST)
@@ -94,6 +101,7 @@ def agregar_autor(request):
     return render(request, "AppCoder/formulario/autor_form.html", {"form": form})
 
 # ---------------------------------------------------
+@login_required
 def agregar_categoria(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
@@ -103,3 +111,20 @@ def agregar_categoria(request):
     else:
         form = CategoriaForm()
     return render(request, "AppCoder/formulario/categoria_form.html", {"form": form})
+
+#----------------------------------------------------
+def registro(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            usuario = form.save()
+
+            # Crear un Autor relacionado con el usuario registrado
+            Autor.objects.create(nombre=usuario.username)
+
+            login(request, usuario)
+            messages.success(request, "¡Registro exitoso! Bienvenido.")
+            return redirect('inicio')
+    else:
+        form = UserCreationForm()
+    return render(request, "AppCoder/registro.html", {"form": form})

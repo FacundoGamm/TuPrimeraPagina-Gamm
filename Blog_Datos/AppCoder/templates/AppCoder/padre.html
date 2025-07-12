@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>{% block title %}App Coder{% endblock %}</title>
+        <title>{% block title %}Datos Curiosos{% endblock %}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{% static 'AppCoder/assets/favicon.ico' %}" />
         <!-- Bootstrap icons-->
@@ -28,7 +28,18 @@
                     <a class="btn btn-outline-primary mx-1" href="{% url 'ver_categorias' %}">Categorías</a>
                     <a class="btn btn-outline-primary mx-1" href="{% url 'buscar_datos' %}">Buscar</a>
 
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger mx-1">Cerrar sesión</button>
+                    </form>
+
+                    {% else %}
+                        <a class="btn btn-outline-success mx-1" href="{% url 'login' %}">Iniciar sesión</a>
+                        <a class="btn btn-outline-info mx-1" href="{% url 'registro' %}">Registrarse</a>
+                    {% endif %}
                 </div>
+
             </div>
         </nav>
         

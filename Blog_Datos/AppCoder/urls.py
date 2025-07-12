@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
-    
+
     path('datos/', views.lista_datos, name='lista_datos'),
 
     path('datos/<int:dato_id>/', views.detalle_dato, name='detalle_dato'),
@@ -18,9 +18,9 @@ urlpatterns = [
 
     path('buscar/', views.buscar_datos, name='buscar_datos'),
 
-    path('autores/nuevo/', views.agregar_autor, 
-    name='agregar_autor'), #/autores/nuevo - para crear autor
-    
+    path('autores/nuevo/', views.agregar_autor, name='agregar_autor'), #/autores/nuevo - para crear autor
+
     path('categorias/nuevo/', views.agregar_categoria, name='agregar_categoria'),#/categorias/nuevo - para crear una categoría
 
+    path('registro/', views.registro, name='registro'),
 ]
