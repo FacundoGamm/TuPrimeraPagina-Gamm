@@ -5,11 +5,19 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 #--------------------------------------------------------------------------
 
 def inicio(request):
-    return render(request, "AppCoder/inicio.html")
+    datos_usuario = None
+    if request.user.is_authenticated:
+        datos_usuario = DatoCurioso.objects.filter(autor=request.user)
+
+    return render(request, "AppCoder/inicio.html", {
+        "datos_usuario": datos_usuario,
+    })
+
 #--------------------------------------------------------------------------
 
 def lista_datos(request):
@@ -42,12 +50,15 @@ def agregar_dato(request):
     if request.method == "POST":
         form = DatoCuriosoForm(request.POST)
         if form.is_valid():
-            form.save()
+            dato = form.save(commit=False)
+            dato.autor = request.user  # Asignar automáticamente el usuario logueado
+            dato.save()
             return redirect("lista_datos")
     else:
         form = DatoCuriosoForm()
 
     return render(request, "AppCoder/formulario/agregar_dato.html", {"form": form})
+
 #--------------------------------------------------------------------------
 
 def nuevo_comentario(request, dato_id):
@@ -128,3 +139,30 @@ def registro(request):
     else:
         form = UserCreationForm()
     return render(request, "AppCoder/registro.html", {"form": form})
+
+#----------------------------------------------------
+#edición de datos creados
+@login_required
+def editar_dato(request, dato_id):
+    dato = get_object_or_404(DatoCurioso, id=dato_id)
+    if request.method == "POST":
+        form = DatoCuriosoForm(request.POST, instance=dato)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Dato actualizado correctamente.")
+            return redirect("detalle_dato", dato_id=dato.id)
+    else:
+        form = DatoCuriosoForm(instance=dato)
+    return render(request, "AppCoder/formulario/editar_dato.html", {"form": form, "dato": dato})
+
+# ---------------------------------------------------
+#opción de eliminar dato
+@login_required
+def eliminar_dato(request, dato_id):
+    dato = get_object_or_404(DatoCurioso, id=dato_id)
+    if request.method == "POST":
+        dato.delete()
+        messages.success(request, "Dato eliminado.")
+        return redirect("lista_datos")
+    # plantilla de confirmación
+    return render(request, "AppCoder/confirmar_eliminar.html", {"dato": dato})

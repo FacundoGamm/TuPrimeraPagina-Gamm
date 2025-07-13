@@ -23,4 +23,9 @@ urlpatterns = [
     path('categorias/nuevo/', views.agregar_categoria, name='agregar_categoria'),#/categorias/nuevo - para crear una categoría
 
     path('registro/', views.registro, name='registro'),
+
+    path('datos/<int:dato_id>/editar/', views.editar_dato, name='editar_dato'),
+    
+    path('datos/<int:dato_id>/eliminar/', views.eliminar_dato, name='eliminar_dato'),
+
 ]

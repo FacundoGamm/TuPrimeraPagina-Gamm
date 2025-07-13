@@ -6,9 +6,28 @@
 {% block contenido %}
 <header class="masthead text-center text-white bg-primary py-5">
     <div class="container">
+        {% if user.is_authenticated %}
+        <h2>Hola, {{ user.username }}!</h2>
+        <p class="lead">Estos son tus datos curiosos publicados:</p>
+
+        {% if datos_usuario %}
+        <ul class="list-group mb-3">
+            {% for dato in datos_usuario %}
+            <li class="list-group-item">
+                <a href="{% url 'detalle_dato' dato.id %}">{{ dato.titulo }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No has publicado datos curiosos aún.</p>
+        {% endif %}
+
+
+        {% else %}
         <h1 class="mb-4">Bienvenido a Datos Curiosos</h1>
         <p class="lead">Explorá hechos fascinantes, compartí curiosidades y descubrí más sobre el mundo.</p>
         <a href="{% url 'lista_datos' %}" class="btn btn-light btn-lg mt-3">Ver Datos Curiosos</a>
+        {% endif %}
     </div>
 </header>
 {% endblock %}

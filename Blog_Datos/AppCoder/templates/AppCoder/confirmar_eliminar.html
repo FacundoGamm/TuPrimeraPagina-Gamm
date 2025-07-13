@@ -1,0 +1,9 @@
+{% extends 'AppCoder/padre.html' %}
+{% block title %}Eliminar dato{% endblock %}
+{% block contenido %}
+<h2>¿Seguro que deseas eliminar "{{ dato.titulo }}"?</h2>
+<form method="POST">{% csrf_token %}
+    <button class="btn btn-danger" type="submit">Sí, eliminar</button>
+    <a class="btn btn-secondary" href="{% url 'detalle_dato' dato.id %}">Cancelar</a>
+</form>
+{% endblock %}

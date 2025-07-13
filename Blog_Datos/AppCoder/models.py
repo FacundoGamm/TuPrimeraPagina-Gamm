@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)
@@ -15,14 +16,16 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
 #----------------------------------------------    
+
 class DatoCurioso(models.Model):
-    titulo = models.CharField(max_length=100)
+    titulo = models.CharField(max_length=200)
     descripcion = models.TextField()
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="datos")
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.titulo
+
 #----------------------------------------------
 class Comentario(models.Model):
     nombre =models.CharField(max_length=100)

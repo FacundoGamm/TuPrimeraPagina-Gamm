@@ -1,0 +1,8 @@
+{% extends 'AppCoder/padre.html' %}
+{% block title %}Editar dato{% endblock %}
+{% block contenido %}
+<h2>Editar dato curioso</h2>
+<form method="POST">{% csrf_token %}{{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Guardar</button>
+</form>
+{% endblock %}
