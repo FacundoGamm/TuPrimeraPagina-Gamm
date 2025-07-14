@@ -1,12 +1,33 @@
 {% extends 'AppCoder/padre.html' %}
+{% load static %}
 
-{% block title %}Iniciar sesión{% endblock %}
+{% block title %}Iniciar Sesión{% endblock %}
 
 {% block contenido %}
-  <h2>Iniciar sesión</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Ingresar</button>
-  </form>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Iniciar Sesión</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Nombre de usuario</label>
+                            <input type="text" name="username" autofocus required id="id_username" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">Contraseña</label>
+                            <input type="password" name="password" required id="id_password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                    </form>
+                    <p class="mt-3 mb-0 text-center">¿No tenés cuenta? <a href="{% url 'registro' %}">Registrate</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
