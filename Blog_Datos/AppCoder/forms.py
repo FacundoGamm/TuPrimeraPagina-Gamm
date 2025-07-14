@@ -25,7 +25,13 @@ class ComentarioForm(forms.ModelForm):
 
 # Formulario de búsqueda
 class BusquedaForm(forms.Form):
-    termino = forms.CharField(label="Buscar", max_length=100)
+    termino = forms.CharField(
+        label="Buscar",
+        max_length=100,
+        widget=forms.TextInput(attrs={'class':'form-control'})
+    )
+
+
 #formulario autor
 class AutorForm(forms.ModelForm):
     class Meta:

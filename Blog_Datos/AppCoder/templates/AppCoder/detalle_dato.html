@@ -4,26 +4,26 @@
 {% block title %}{{ dato.titulo }}{% endblock %}
 
 {% block contenido %}
-<div class="container mt-4">
-    <div class="card shadow-sm mb-4">
+<div class="container py-5">
+    <div class="card shadow-lg border-0 mb-4">
         <div class="card-body">
-            <h3 class="card-title">{{ dato.titulo }}</h3>
-            <p class="card-text">{{ dato.descripcion }}</p>
+            <h3 class="card-title text-primary fw-bold">{{ dato.titulo }}</h3>
+            <p class="card-text fs-5 text-dark">{{ dato.descripcion }}</p>
         </div>
-        <div class="card-footer text-muted">
-            <p class="mb-1">Categoría: {{ dato.categoria }}</p>
-            <p class="mb-0">Autor: {{ dato.autor }}</p>
+        <div class="card-footer text-muted small">
+            Categoría: {{ dato.categoria }} | Autor: {{ dato.autor.username }}
         </div>
     </div>
 
-     {% if user.is_authenticated %}
-        <div class="mb-3">
-            <a class="btn btn-outline-warning btn-sm" href="{% url 'editar_dato' dato.id %}">Editar</a>
-            <a class="btn btn-outline-danger btn-sm" href="{% url 'eliminar_dato' dato.id %}">Eliminar</a>
+    {% if user.is_authenticated %}
+        <div class="mb-4 text-end">
+            <a href="{% url 'editar_dato' dato.id %}" class="btn btn-outline-warning btn-sm">Editar</a>
+            <a href="{% url 'eliminar_dato' dato.id %}" class="btn btn-outline-danger btn-sm">Eliminar</a>
         </div>
     {% endif %}
 
-    <h4 class="mt-4">Comentarios</h4>
+    <h4 class="text-secondary mb-3">Comentarios</h4>
+
     {% if comentarios %}
         <ul class="list-group mb-4">
             {% for comentario in comentarios %}
@@ -33,14 +33,15 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p class="text-muted">Aún no hay comentarios.</p>
+        <p class="text-muted">Aún no hay comentarios. ¡Sé el primero en comentar!</p>
     {% endif %}
 
-    <h5 class="mt-4">Agregar un comentario</h5>
-    <form method="POST" class="mb-5">
+    <h5 class="mt-4 text-dark">Agregar un comentario</h5>
+    <form method="POST" class="mt-3 mb-5">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success">Comentar</button>
     </form>
 </div>
 {% endblock %}
+

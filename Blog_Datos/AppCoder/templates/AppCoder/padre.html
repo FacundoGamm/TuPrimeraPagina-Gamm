@@ -7,39 +7,94 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>{% block title %}Datos Curiosos{% endblock %}</title>
+        
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{% static 'AppCoder/assets/favicon.ico' %}" />
+        
         <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        
         <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" />
+        
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'AppCoder/css/styles.css' %}" rel="stylesheet" />
+
+        <!-- Estilos personalizados -->
+        <style>
+            body {
+                background-color: #476763;
+                font-family: 'Lato', sans-serif;
+            }
+
+            .navbar {
+                background-color: #979797 !important;
+            }
+
+            .navbar .btn,
+            .navbar .navbar-brand {
+                color: #44dabf !important;
+            }
+
+            .navbar .btn:hover {
+                background-color: #005999 !important;
+                color: rgb(198, 255, 228) !important;
+            }
+
+            .card {
+                border: none;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .btn-light {
+                background-color: #004631;
+                color: #00a86d;
+                border: 1px solid #ccc;
+            }
+
+            .btn-light:hover {
+                background-color: #e6f0ff;
+            }
+
+            footer.footer {
+                background-color: #01996b;
+                color: white;
+            }
+
+            footer.footer a {
+                color: #a6d1ff;
+            }
+
+            footer.footer a:hover {
+                color: white;
+                text-decoration: underline;
+            }
+        </style>
     </head>
+
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-light bg-light static-top">
+        <nav class="navbar navbar-light static-top">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'inicio' %}">AppCoder</a>
+                <a class="navbar-brand" href="{% url 'inicio' %}">Datos Curiosos</a>
                 <div>
-                    <a class="btn btn-outline-primary mx-1" href="{% url 'inicio' %}">Inicio</a>
-                    <a class="btn btn-outline-primary mx-1" href="{% url 'lista_datos' %}">Datos Curiosos</a>
-                    <a class="btn btn-outline-primary mx-1" href="{% url 'ver_autores' %}">Autores</a>
-                    <a class="btn btn-outline-primary mx-1" href="{% url 'ver_categorias' %}">Categorías</a>
-                    <a class="btn btn-outline-primary mx-1" href="{% url 'buscar_datos' %}">Buscar</a>
+                    <a class="btn btn-outline-light mx-1" href="{% url 'inicio' %}">Inicio</a>
+                    <a class="btn btn-outline-light mx-1" href="{% url 'lista_datos' %}">Datos Curiosos</a>
+                    <a class="btn btn-outline-light mx-1" href="{% url 'ver_autores' %}">Autores</a>
+                    <a class="btn btn-outline-light mx-1" href="{% url 'ver_categorias' %}">Categorías</a>
+                    <a class="btn btn-outline-light mx-1" href="{% url 'buscar_datos' %}">Buscar</a>
 
                     {% if user.is_authenticated %}
                     <form method="POST" action="{% url 'logout' %}" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-danger mx-1">Cerrar sesión</button>
                     </form>
-
                     {% else %}
                         <a class="btn btn-outline-success mx-1" href="{% url 'login' %}">Iniciar sesión</a>
                         <a class="btn btn-outline-info mx-1" href="{% url 'registro' %}">Registrarse</a>
                     {% endif %}
                 </div>
-
             </div>
         </nav>
         
@@ -49,47 +104,42 @@
             {% endblock %}
         </main>
 
-        
         <!-- Footer-->
-        <footer class="footer bg-light">
+        <footer class="footer py-4">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                         <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">About</a></li>
+                            <li class="list-inline-item"><a href="#">Acerca de</a></li>
                             <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Contact</a></li>
+                            <li class="list-inline-item"><a href="#">Contacto</a></li>
                             <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
+                            <li class="list-inline-item"><a href="#">Términos</a></li>
                             <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="#">Privacidad</a></li>
                         </ul>
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2023. All Rights Reserved.</p>
+                        <p class="text-muted small mb-4 mb-lg-0">© 2025 Datos Curiosos. Todos los derechos reservados.</p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-facebook fs-3"></i></a>
+                                <a href="#"><i class="bi-facebook fs-3"></i></a>
                             </li>
                             <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-twitter fs-3"></i></a>
+                                <a href="#"><i class="bi-twitter fs-3"></i></a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#!"><i class="bi-instagram fs-3"></i></a>
+                                <a href="#"><i class="bi-instagram fs-3"></i></a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </footer>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="{% static 'AppCoder/js/scripts.js' %}"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>
