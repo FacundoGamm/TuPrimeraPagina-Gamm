@@ -20,8 +20,10 @@ class ComentarioForm(forms.ModelForm):
         model = Comentario
         fields = ['nombre', 'comentario']
         widgets = {
-            'comentario': forms.Textarea(attrs={'rows': 3}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'comentario': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
         }
+
 
 # Formulario de búsqueda
 class BusquedaForm(forms.Form):
