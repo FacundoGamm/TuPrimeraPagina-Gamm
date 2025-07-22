@@ -21,3 +21,7 @@ python manage.py migrate
 
 # Usuario: PruebaFinal // Contraseña: Contraseña123 (Ultimo usuario creado con su publicación correspondiente)
 python manage.py runserver
+
+
+
+link video explicativo: https://www.youtube.com/watch?v=BESS1Fg7nuo&ab_channel=FacundoGamm
